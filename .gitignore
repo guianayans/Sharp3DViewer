@@ -1,0 +1,14 @@
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+__pycache__/
+*.pyc
+venv/
+.venv/
+.env
+.DS_Store
+
+# saída de execução, não código
+backend/gaussians/
+backend/uploads/

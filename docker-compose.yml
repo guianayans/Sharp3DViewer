@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: /pendriver/3DViewer/backend
+    container_name: sharp-backend
+    volumes:
+      - /pendriver/3DViewer/backend/uploads:/app/uploads
+      - /pendriver/3DViewer/backend/gaussians:/app/gaussians
+
+  frontend:
+    build:
+      context: /pendriver/3DViewer/frontend
+      args:
+        VITE_APP_PASSWORD: ${VITE_APP_PASSWORD}
+    container_name: sharp-frontend
+    ports:
+      - "3040:3040"
+    depends_on:
+      - backend
