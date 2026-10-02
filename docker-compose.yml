@@ -8,6 +8,13 @@ services:
     volumes:
       - /pendriver/3DViewer/backend/uploads:/app/uploads
       - /pendriver/3DViewer/backend/gaussians:/app/gaussians
+    # a imagem só tem python (sem curl/wget); /docs é a página da API, leve e sempre presente
+    healthcheck:
+      test: ['CMD', 'python3', '-c', "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/docs', timeout=4)"]
+      interval: 30s
+      timeout: 6s
+      retries: 3
+      start_period: 60s
 
   frontend:
     build:
@@ -19,3 +26,9 @@ services:
       - "3040:3040"
     depends_on:
       - backend
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '-O', '/dev/null', 'http://127.0.0.1:3040/']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
